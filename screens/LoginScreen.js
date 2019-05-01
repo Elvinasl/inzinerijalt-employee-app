@@ -48,9 +48,18 @@ export default class LoginScreen extends React.Component {
                     <Header />
                     <Content contentContainerStyle={styles.content}>
                         <Item rounded>
-                            <Input placeholder='Jūsų prisijungimo kodas' onChangeText={(text) => this.handleInput(text)} />
+                            <Input
+                                placeholder='Jūsų prisijungimo kodas'
+                                onChangeText={(text) => this.handleInput(text)}
+                                keyboardType={"number-pad"}
+                            />
                         </Item>
-                        <Button large success onPress={() => this.handleLoginClick()}>
+                        <Button
+                            onPress={() => this.handleLoginClick()}
+                            style={styles.loginBtn}
+                            large
+                            success
+                        >
                             <Text>Prisijungti</Text>
                         </Button>
                     </Content>
@@ -66,4 +75,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    loginBtn: {
+        display: 'flex',
+        alignSelf: 'center',
+        marginTop: 10
+    }
 });
