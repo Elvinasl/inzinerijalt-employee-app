@@ -6,10 +6,6 @@ import { Font } from 'expo';
 
 export default class LoginScreen extends React.Component {
 
-    static navigationOptions = {
-        title: 'Prašome prisijungti',
-    };
-
     async componentDidMount() {
         await Font.loadAsync({
             'Roboto': require('native-base/Fonts/Roboto.ttf'),
@@ -35,10 +31,7 @@ export default class LoginScreen extends React.Component {
         fetch(`${Globals.SERVER_URL}/api/app/get-my-sales?app_code=1111`, { // TODO: replace number with the state code
                 method: 'GET',
             })
-            .then((response) => {
-                console.log(response);
-                return response.json()
-            })
+            .then((response) => response.json())
             .then((responseJson) => {
                 navigation.push('List', {
                     name: responseJson.username,

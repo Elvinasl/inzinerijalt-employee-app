@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button } from 'native-base';
-import {StyleSheet} from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default class ListExample extends Component {
+
+    handleDriveElseClick() {
+        // TODO: Drive else action
+        console.log('drive else click');
+    }
+
+    handleDriveToAddress(address) {
+        // TODO: implement drive to address
+        console.log(address);
+    }
 
     render() {
         const { navigation } = this.props;
@@ -15,11 +25,16 @@ export default class ListExample extends Component {
                         <Title>{username} darbai</Title>
                     </Body>
                     <Right>
-                        <Button>
+                        <Button style={styles.driveElseBtn} onPress={() => navigation.push('Home')}>
                             <Text>Atsijungti</Text>
                         </Button>
                     </Right>
                 </Header>
+                <View style={styles.driveElseBtn}>
+                    <Button block info onPress={() => this.handleDriveElseClick()}>
+                        <Text>Vykti kitur</Text>
+                    </Button>
+                </View>
                 <Content>
                     <List>
                         {sales.length && (
@@ -27,7 +42,7 @@ export default class ListExample extends Component {
                                 <ListItem key={sale.id}>
                                     <Text>{sale.name}</Text>
                                     <Right style={styles.container}>
-                                        <Button success large>
+                                        <Button success large onPress={() => this.handleDriveToAddress(sale.name)}>
                                             <Text>Vykti</Text>
                                         </Button>
                                     </Right>
@@ -47,4 +62,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'space-between',
     },
+    driveElseBtn: {
+        marginTop: 20,
+        marginBottom: 20
+    }
 });
