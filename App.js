@@ -1,11 +1,37 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import Globals from "./Globals";
 
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      code: ''
+    };
+  }
+
+  handleInput(code) {
+    this.setState({code})
+    alert(code);
+  }
+
+  handleLoginClick() {
+    console.log('click', Globals.SERVER_URL)
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Jūsų prisijungimo kodas:</Text>
+        <TextInput
+            placeholder="Kodas"
+            onChangeText={(text) => this.handleInput(text)}
+        />
+        <Button
+            title={'Prisijungti'}
+            onPress={() => this.handleLoginClick()}
+        />
       </View>
     );
   }
