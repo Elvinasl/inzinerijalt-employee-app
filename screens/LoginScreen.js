@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container, Header, Content, Item, Input, Button, Toast, Root, Text} from 'native-base';
 import Globals from '../Globals';
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 
 export default class LoginScreen extends React.Component {
 
@@ -46,6 +46,9 @@ export default class LoginScreen extends React.Component {
             <Root>
                 <Container>
                     <Header />
+                    <Container style={styles.logoContainer}>
+                        <Image source={require('../assets/inzinerijalt_png_logo.png')} />
+                    </Container>
                     <Content contentContainerStyle={styles.content}>
                         <Item rounded>
                             <Input
@@ -70,14 +73,19 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    content: {
-        flex: 1,
+    logoContainer: {
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    content: {
+        display: 'flex',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
     },
     loginBtn: {
         display: 'flex',
         alignSelf: 'center',
         marginTop: 10
-    }
+    },
 });
