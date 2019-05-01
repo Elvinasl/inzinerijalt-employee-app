@@ -25,7 +25,7 @@ export default class ListExample extends Component {
                         <Title>{username} darbai</Title>
                     </Body>
                     <Right>
-                        <Button style={styles.driveElseBtn} onPress={() => navigation.push('Home')}>
+                        <Button style={styles.driveElseBtn} onPress={() => navigation.push('Login')}>
                             <Text>Atsijungti</Text>
                         </Button>
                     </Right>
