@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
 import Globals from '../Globals';
+import { Font } from 'expo';
 
 
 export default class LoginScreen extends React.Component {
@@ -8,6 +9,13 @@ export default class LoginScreen extends React.Component {
     static navigationOptions = {
         title: 'Prašome prisijungti',
     };
+
+    async componentDidMount() {
+        await Font.loadAsync({
+            'Roboto': require('native-base/Fonts/Roboto.ttf'),
+            'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+        });
+    }
 
     constructor(props) {
         super(props);

@@ -1,35 +1,50 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {StyleSheet, Text, TextInput, ScrollView, Button} from 'react-native';
+import React, { Component } from 'react';
+import { Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button } from 'native-base';
+import {StyleSheet} from "react-native";
 
-
-export default class ListScreen extends React.Component {
-
-    static navigationOptions = {
-        title: 'Jūsų darbai',
-    };
-
-    constructor(props) {
-        super(props);
-
-    }
+export default class ListExample extends Component {
 
     render() {
         const { navigation } = this.props;
         const username = navigation.getParam('name', 'No name');
         const sales = navigation.getParam('sales', []);
         return (
-            <ScrollView>
-                {sales.length && (
-                    sales.map(sale => (
-                        <Text key={sale.id}>{sale.name}</Text>
-                    )))
-                }
-            </ScrollView>
+            <Container>
+                <Header>
+                    <Body>
+                        <Title>{username} darbai</Title>
+                    </Body>
+                    <Right>
+                        <Button>
+                            <Text>Atsijungti</Text>
+                        </Button>
+                    </Right>
+                </Header>
+                <Content>
+                    <List>
+                        {sales.length && (
+                            sales.map(sale => (
+                                <ListItem key={sale.id}>
+                                    <Text>{sale.name}</Text>
+                                    <Right style={styles.container}>
+                                        <Button success large>
+                                            <Text>Vykti</Text>
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                            )))
+                        }
+                    </List>
+                </Content>
+            </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'space-between',
+    },
 });
