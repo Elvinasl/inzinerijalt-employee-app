@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
-import { Container, Toast, Root } from "native-base";
+import {Container, Header, Content, Item, Input, Button, Toast, Root, Text} from 'native-base';
 import Globals from '../Globals';
-
+import { StyleSheet } from "react-native";
 
 export default class LoginScreen extends React.Component {
 
@@ -45,16 +44,16 @@ export default class LoginScreen extends React.Component {
     render() {
         return (
             <Root>
-                <Container style={styles.container}>
-                    <Text>Jūsų prisijungimo kodas:</Text>
-                    <TextInput
-                        placeholder="Kodas"
-                        onChangeText={(text) => this.handleInput(text)}
-                    />
-                    <Button
-                        title={'Prisijungti'}
-                        onPress={() => this.handleLoginClick()}
-                    />
+                <Container>
+                    <Header />
+                    <Content contentContainerStyle={styles.content}>
+                        <Item rounded>
+                            <Input placeholder='Jūsų prisijungimo kodas' onChangeText={(text) => this.handleInput(text)} />
+                        </Item>
+                        <Button large success onPress={() => this.handleLoginClick()}>
+                            <Text>Prisijungti</Text>
+                        </Button>
+                    </Content>
                 </Container>
             </Root>
         );
@@ -62,9 +61,8 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    content: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
