@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
+import { Container, Toast, Root } from "native-base";
 import Globals from '../Globals';
-import { Font } from 'expo';
 
 
 export default class LoginScreen extends React.Component {
@@ -10,15 +10,7 @@ export default class LoginScreen extends React.Component {
         super(props);
         this.state = {
             code: '',
-            showToast: false
         };
-    }
-
-    async componentDidMount() {
-        await Font.loadAsync({
-            'Roboto': require('native-base/Fonts/Roboto.ttf'),
-            'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-        });
     }
 
     handleInput(code) {
@@ -39,25 +31,32 @@ export default class LoginScreen extends React.Component {
                     sales: responseJson.sales,
                 });
             })
-            .catch((error) => {
-                console.error(error);
-                // TODO: proper error handling
+            .catch(() => {
+                Toast.show({
+                    text: "Netinkamas kodas!",
+                    buttonText: "Supratau",
+                    position: "bottom",
+                    type: "danger",
+                    duration: 3000
+                })
             });
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Jūsų prisijungimo kodas:</Text>
-                <TextInput
-                    placeholder="Kodas"
-                    onChangeText={(text) => this.handleInput(text)}
-                />
-                <Button
-                    title={'Prisijungti'}
-                    onPress={() => this.handleLoginClick()}
-                />
-            </View>
+            <Root>
+                <Container style={styles.container}>
+                    <Text>Jūsų prisijungimo kodas:</Text>
+                    <TextInput
+                        placeholder="Kodas"
+                        onChangeText={(text) => this.handleInput(text)}
+                    />
+                    <Button
+                        title={'Prisijungti'}
+                        onPress={() => this.handleLoginClick()}
+                    />
+                </Container>
+            </Root>
         );
     }
 }
