@@ -3,8 +3,11 @@ import ListScreen from "./screens/ListScreen";
 import LoginScreen from "./screens/LoginScreen";
 
 const MainNavigator = createStackNavigator({
-  Home: {screen: LoginScreen},
+  Login: {screen: LoginScreen},
   List: {screen: ListScreen},
+},
+{
+  initialRouteName: 'Login'
 });
 
 const App = createAppContainer(MainNavigator);
