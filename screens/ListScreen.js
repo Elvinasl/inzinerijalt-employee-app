@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {StyleSheet, Text, TextInput, ScrollView, Button} from 'react-native';
 
 
-export default class App extends React.Component {
+export default class ListScreen extends React.Component {
 
     static navigationOptions = {
         title: 'Jūsų darbai',
@@ -25,3 +26,11 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
 
 });
+
+
+ListScreen.propTypes = {
+    name: PropTypes.string.isRequired,
+    sales: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired,
+    }))
+};

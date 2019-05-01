@@ -21,7 +21,11 @@ export default class LoginScreen extends React.Component {
     }
 
     handleLoginClick() {
-        console.log('click', Globals.SERVER_URL)
+        const { navigation } = this.props;
+
+        // TODO: fetch and pass data
+        console.log('click', Globals.SERVER_URL);
+        navigation.navigate('List', {});
     }
 
     render() {
@@ -35,7 +39,7 @@ export default class LoginScreen extends React.Component {
                 />
                 <Button
                     title={'Prisijungti'}
-                    onPress={() => navigate('List')}
+                    onPress={() => this.handleLoginClick()}
                 />
             </View>
         );
