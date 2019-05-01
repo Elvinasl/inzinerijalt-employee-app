@@ -1,13 +1,15 @@
 import React from 'react';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
+import { Font } from 'expo';
 import ListScreen from "./screens/ListScreen";
 import LoginScreen from "./screens/LoginScreen";
-import { Font } from 'expo';
+import MapScreen from "./screens/MapScreen";
 
 
 const MainNavigator = createStackNavigator({
   Login: {screen: LoginScreen},
   List: {screen: ListScreen},
+  Map: {screen: MapScreen},
 }, {
   initialRouteName: 'Login',
   headerMode: 'none',

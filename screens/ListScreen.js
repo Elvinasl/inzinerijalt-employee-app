@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button } from 'native-base';
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 
 export default class ListExample extends Component {
 
@@ -9,14 +9,24 @@ export default class ListExample extends Component {
         console.log('drive else click');
     }
 
-    handleDriveToAddress(address) {
-        // TODO: implement drive to address
-        console.log(address);
+    verifyDriveToAddress(address, callback) {
+        Alert.alert(
+            'Ar tikai norite vykti adresu:', `${address}?`, [
+                {text: 'Atšaukti', onPress: () => {}, style: 'cancel'},
+                {text: 'Taip', onPress: () => callback(address)},
+            ],
+        );
     }
+
+    handleDriveToAddress = (address) => {
+        const { navigation } = this.props;
+        navigation.push('Map', { address })
+    };
 
     render() {
         const { navigation } = this.props;
-        const username = navigation.getParam('name', 'No name');
+        // TODO: store these variables in local storage
+        const username = navigation.getParam('name', '');
         const sales = navigation.getParam('sales', []);
         return (
             <Container>
@@ -25,29 +35,38 @@ export default class ListExample extends Component {
                         <Title>{username} darbai</Title>
                     </Body>
                     <Right>
-                        <Button style={styles.driveElseBtn} onPress={() => navigation.push('Login')}>
+                        <Button
+                            style={styles.driveElseBtn}
+                            onPress={() => navigation.push('Login')}
+                            danger
+                        >
                             <Text>Atsijungti</Text>
                         </Button>
                     </Right>
                 </Header>
                 <View style={styles.driveElseBtn}>
-                    <Button block info onPress={() => this.handleDriveElseClick()}>
+                    <Button
+                        onPress={() => this.handleDriveElseClick()}
+                        block
+                        info
+                        large
+                    >
                         <Text>Vykti kitur</Text>
                     </Button>
                 </View>
                 <Content>
                     <List>
-                        {sales.length && (
+                        {sales.length ? (
                             sales.map(sale => (
                                 <ListItem key={sale.id}>
                                     <Text>{sale.name}</Text>
                                     <Right style={styles.container}>
-                                        <Button success large onPress={() => this.handleDriveToAddress(sale.name)}>
+                                        <Button success large onPress={() => this.verifyDriveToAddress(sale.name, this.handleDriveToAddress)}>
                                             <Text>Vykti</Text>
                                         </Button>
                                     </Right>
                                 </ListItem>
-                            )))
+                            ))) : null
                         }
                     </List>
                 </Content>
