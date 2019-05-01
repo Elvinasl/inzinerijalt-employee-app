@@ -15,9 +15,16 @@ export default class ListScreen extends React.Component {
     }
 
     render() {
+        const { navigation } = this.props;
+        const username = navigation.getParam('name', 'No name');
+        const sales = navigation.getParam('sales', []);
         return (
             <ScrollView>
-                <Text>Hello</Text>
+                {sales.length && (
+                    sales.map(sale => (
+                        <Text key={sale.id}>{sale.name}</Text>
+                    )))
+                }
             </ScrollView>
         );
     }
@@ -26,11 +33,3 @@ export default class ListScreen extends React.Component {
 const styles = StyleSheet.create({
 
 });
-
-
-ListScreen.propTypes = {
-    name: PropTypes.string.isRequired,
-    sales: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-    }))
-};

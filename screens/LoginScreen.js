@@ -22,14 +22,28 @@ export default class LoginScreen extends React.Component {
 
     handleLoginClick() {
         const { navigation } = this.props;
+        const { code } = this.state;
 
-        // TODO: fetch and pass data
-        console.log('click', Globals.SERVER_URL);
-        navigation.navigate('List', {});
+        fetch(`${Globals.SERVER_URL}/api/app/get-my-sales?app_code=1111`, { // TODO: replace number with the state code
+                method: 'GET',
+            })
+            .then((response) => {
+                console.log(response);
+                return response.json()
+            })
+            .then((responseJson) => {
+                navigation.push('List', {
+                    name: responseJson.username,
+                    sales: responseJson.sales,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+                // TODO: proper error handling
+            });
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <Text>Jūsų prisijungimo kodas:</Text>

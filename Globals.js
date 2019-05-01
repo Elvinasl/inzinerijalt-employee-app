@@ -1,6 +1,6 @@
 class Globals {
     constructor() {
-        this.SERVER_URL = 'http://localhost/';
+        this.SERVER_URL = 'http://10.0.2.2';
     }
 }
 
