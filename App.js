@@ -17,14 +17,27 @@ const AppContainer = createAppContainer(MainNavigator);
 
 export default class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFontsLoaded: false,
+    };
+  }
+
   async componentDidMount() {
     await Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
+    this.setState({ isFontsLoaded: true });
   }
 
   render() {
-    return <AppContainer />;
+    const { isFontsLoaded } = this.state;
+    return (
+        <React.Fragment>
+          { isFontsLoaded ? (<AppContainer/>) : null }
+        </React.Fragment>
+    )
   }
 }
