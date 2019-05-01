@@ -55,6 +55,7 @@ export default class LoginScreen extends React.Component {
                                 placeholder='Jūsų prisijungimo kodas'
                                 onChangeText={(text) => this.handleInput(text)}
                                 keyboardType={"number-pad"}
+                                style={styles.placeholder}
                             />
                         </Item>
                         <Button
@@ -88,4 +89,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10
     },
+    placeholder: {
+        textAlign: 'center'
+    }
 });
