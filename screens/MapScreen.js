@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Title, Body, Right, Text, Button } from 'native-base';
+import { Container, Header, Title, Body, Right, Text, Button, Badge } from 'native-base';
 import { Dimensions, StyleSheet, Alert } from 'react-native';
 import { MapView, Location, Permissions, Constants } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
@@ -19,7 +19,9 @@ export default class ListExample extends Component {
         this.state = {
             destinationAddress: props.navigation.getParam('address', '-'),
             region: null,
-            destinationCoordinates: null
+            destinationCoordinates: null,
+            distance: null,
+            duration: null,
         };
 
         this.mapView = null;
@@ -45,9 +47,10 @@ export default class ListExample extends Component {
     };
 
     _onDirectionsReady = (directions) => {
-        const destinationCoordinates = directions.coordinates[directions.coordinates.length - 1];
+        const { distance, duration, coordinates } = directions;
+        const destinationCoordinates = coordinates[coordinates.length - 1];
 
-        this.mapView.fitToCoordinates(directions.coordinates, {
+        this.mapView.fitToCoordinates(coordinates, {
             edgePadding: {
                 right: (width / 20),
                 bottom: (height / 20),
@@ -55,8 +58,7 @@ export default class ListExample extends Component {
                 top: (height / 20),
             }
         });
-
-        this.setState({ destinationCoordinates })
+        this.setState({ destinationCoordinates, distance, duration })
     };
 
     _onError = (errorMessage) => {
@@ -71,7 +73,7 @@ export default class ListExample extends Component {
     }
 
     render() {
-        const { region, destinationCoordinates, destinationAddress } = this.state;
+        const { region, destinationCoordinates, destinationAddress, duration, distance } = this.state;
         return (
             <Container style={styles.container}>
                 <Header>
@@ -87,8 +89,20 @@ export default class ListExample extends Component {
                         </Button>
                     </Right>
                 </Header>
-                { region &&
-                    <MapView
+                <Container style={styles.mapHeader}>
+                    { duration &&
+                        <Badge info>
+                            <Text>Laikas iki darbo: { duration.toFixed(0) } min</Text>
+                        </Badge>
+                    }
+                    { distance &&
+                        <Badge info>
+                            <Text>Atstumas iki darbo: { distance.toFixed(0) } km</Text>
+                        </Badge>
+                    }
+                </Container>
+                { region
+                && <MapView
                         initialRegion={region}
                         style={styles.mapContainer}
                         ref={c => this.mapView = c}
@@ -117,10 +131,23 @@ export default class ListExample extends Component {
 }
 
 const styles = StyleSheet.create({
-    mapContainer: {
-        flex: 1,
-    },
     container: {
         paddingTop: Constants.statusBarHeight,
+        display: 'flex',
+        flexDirection: 'column',
+
     },
+    mapContainer: {
+        flex: 99,
+        zIndex: 0,
+    },
+    mapHeader: {
+        zIndex: 1,
+        position: 'absolute',
+        backgroundColor: 'transparent',
+        top: 100,
+        left: 10,
+        flexDirection: 'row',
+    },
+
 });
