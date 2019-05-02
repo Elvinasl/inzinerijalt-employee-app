@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button, Toast} from 'native-base';
 import { StyleSheet, View, Alert } from "react-native";
 import { AsyncStorage } from 'react-native';
+import { Constants } from "expo";
 
 export default class ListExample extends Component {
 
@@ -69,7 +70,7 @@ export default class ListExample extends Component {
     render() {
         const { username, sales } = this.state;
         return (
-            <Container>
+            <Container style={styles.MainContainer}>
                 <Header>
                     <Body>
                         <Title>{username} darbai</Title>
@@ -116,6 +117,9 @@ export default class ListExample extends Component {
 }
 
 const styles = StyleSheet.create({
+    MainContainer: {
+        paddingTop: Constants.statusBarHeight,
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
