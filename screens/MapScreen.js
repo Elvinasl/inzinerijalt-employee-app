@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Title, Body, Right, Text, Button } from 'native-base';
+import { Container, Header, Title, Body, Right, Text, Button } from 'native-base';
 import { StyleSheet } from "react-native";
+import { MapView } from 'expo';
 
 export default class ListExample extends Component {
 
@@ -28,14 +29,22 @@ export default class ListExample extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Content>
-
-                </Content>
+                <MapView
+                    style={styles.mapContainer}
+                    initialRegion={{
+                        latitude: 37.78825,
+                        longitude: -122.4324,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                />
             </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
-
+    mapContainer: {
+        flex: 1,
+    }
 });
