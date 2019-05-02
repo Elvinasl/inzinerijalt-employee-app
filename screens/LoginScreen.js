@@ -2,6 +2,7 @@ import React from 'react';
 import {Container, Header, Content, Item, Input, Button, Toast, Root, Text} from 'native-base';
 import Globals from '../Globals';
 import { StyleSheet, Image } from "react-native";
+import { AsyncStorage } from 'react-native';
 
 export default class LoginScreen extends React.Component {
 
@@ -17,18 +18,17 @@ export default class LoginScreen extends React.Component {
     }
 
     handleLoginClick() {
-        const { navigation } = this.props;
         const { code } = this.state;
+        const { navigation } = this.props;
 
         fetch(`${Globals.SERVER_URL}/api/app/get-my-sales?app_code=1111`, { // TODO: replace number with the state code
                 method: 'GET',
             })
             .then((response) => response.json())
             .then((responseJson) => {
-                navigation.push('List', {
-                    name: responseJson.username,
-                    sales: responseJson.sales,
-                });
+                // adding API data to local storage
+                AsyncStorage.setItem('data', JSON.stringify(responseJson));
+                navigation.push('List');
             })
             .catch(() => {
                 Toast.show({
