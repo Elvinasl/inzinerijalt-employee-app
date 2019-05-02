@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button, Toast} from 'native-base';
+import {Container, Header, Content, List, ListItem, Title, Body, Left, Right, Text, Button, Toast} from 'native-base';
 import { StyleSheet, View, Alert } from "react-native";
 import { AsyncStorage } from 'react-native';
 import { Constants } from "expo";
@@ -100,9 +100,15 @@ export default class ListExample extends Component {
                         {sales.length ? (
                             sales.map(sale => (
                                 <ListItem key={sale.id}>
-                                    <Text>{sale.name}</Text>
+                                    <Left>
+                                        <Text>{sale.name}</Text>
+                                    </Left>
                                     <Right style={styles.container}>
-                                        <Button success large onPress={() => this._verifyDriveToAddress(sale.name, this._handleDriveToAddress)}>
+                                        <Button
+                                            onPress={() => this._verifyDriveToAddress(sale.name, this._handleDriveToAddress)}
+                                            success
+                                            large
+                                        >
                                             <Text>Vykti</Text>
                                         </Button>
                                     </Right>
