@@ -1,15 +1,50 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button } from 'native-base';
+import {Container, Header, Content, List, ListItem, Title, Body, Right, Text, Button, Toast} from 'native-base';
 import { StyleSheet, View, Alert } from "react-native";
+import { AsyncStorage } from 'react-native';
 
 export default class ListExample extends Component {
 
-    handleDriveElseClick() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            sales: [],
+        };
+    }
+
+    componentWillMount() {
+        this._getDateFromStorage();
+    }
+
+    _getDateFromStorage() {
+        AsyncStorage.getItem('data')
+            .then((responseJson) => {
+                if (responseJson !== null) {
+                    // taking date from the local storage and assigning it to the state
+                    const { username, sales } = JSON.parse(responseJson);
+                    this.setState({
+                        username,
+                        sales,
+                    });
+                }
+            }).catch(() => {
+            Toast.show({
+                text: "Nepavyko gauti išsaugotų duomenų.",
+                buttonText: "Supratau",
+                position: "bottom",
+                type: "danger",
+                duration: 3000
+            })
+        });
+    }
+
+    _handleDriveElseClick() {
         // TODO: Drive else action
         console.log('drive else click');
     }
 
-    verifyDriveToAddress(address, callback) {
+    _verifyDriveToAddress(address, callback) {
         Alert.alert(
             'Ar tikai norite vykti adresu:', `${address}?`, [
                 {text: 'Atšaukti', onPress: () => {}, style: 'cancel'},
@@ -18,16 +53,14 @@ export default class ListExample extends Component {
         );
     }
 
-    handleDriveToAddress = (address) => {
+    _handleDriveToAddress = (address) => {
         const { navigation } = this.props;
         navigation.push('Map', { address })
     };
 
     render() {
         const { navigation } = this.props;
-        // TODO: store these variables in local storage
-        const username = navigation.getParam('name', '');
-        const sales = navigation.getParam('sales', []);
+        const { username, sales } = this.state;
         return (
             <Container>
                 <Header>
@@ -46,7 +79,7 @@ export default class ListExample extends Component {
                 </Header>
                 <View style={styles.driveElseBtn}>
                     <Button
-                        onPress={() => this.handleDriveElseClick()}
+                        onPress={() => this._handleDriveElseClick()}
                         block
                         info
                         large
@@ -61,7 +94,7 @@ export default class ListExample extends Component {
                                 <ListItem key={sale.id}>
                                     <Text>{sale.name}</Text>
                                     <Right style={styles.container}>
-                                        <Button success large onPress={() => this.verifyDriveToAddress(sale.name, this.handleDriveToAddress)}>
+                                        <Button success large onPress={() => this._verifyDriveToAddress(sale.name, this._handleDriveToAddress)}>
                                             <Text>Vykti</Text>
                                         </Button>
                                     </Right>

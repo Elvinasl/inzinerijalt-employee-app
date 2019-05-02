@@ -13,11 +13,11 @@ export default class LoginScreen extends React.Component {
         };
     }
 
-    handleInput(code) {
+    _handleInput(code) {
         this.setState({code})
     }
 
-    handleLoginClick() {
+    _handleLoginClick() {
         const { code } = this.state;
         const { navigation } = this.props;
 
@@ -53,13 +53,13 @@ export default class LoginScreen extends React.Component {
                         <Item rounded>
                             <Input
                                 placeholder='Jūsų prisijungimo kodas'
-                                onChangeText={(text) => this.handleInput(text)}
+                                onChangeText={(text) => this._handleInput(text)}
                                 keyboardType={"number-pad"}
                                 style={styles.placeholder}
                             />
                         </Item>
                         <Button
-                            onPress={() => this.handleLoginClick()}
+                            onPress={() => this._handleLoginClick()}
                             style={styles.loginBtn}
                             large
                             success

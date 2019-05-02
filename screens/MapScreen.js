@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 
 export default class ListExample extends Component {
 
-    finishTask() {
+    _finishTask() {
         console.log('finished');
         const { navigation } = this.props;
         navigation.push('List')
@@ -21,7 +21,7 @@ export default class ListExample extends Component {
                     </Body>
                     <Right>
                         <Button
-                            onPress={() => this.finishTask()}
+                            onPress={() => this._finishTask()}
                             danger
                         >
                             <Text>Baigti darbą</Text>
