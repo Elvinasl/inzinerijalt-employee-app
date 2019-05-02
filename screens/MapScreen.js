@@ -16,14 +16,11 @@ export default class ListExample extends Component {
     constructor(props) {
         super(props);
 
-        const address = props.navigation.getParam('address', '');
+
         this.state = {
-            address: address,
+            destinationAddress: props.navigation.getParam('c', ''),
             region: null,
-            destination: {
-                latitude: 55.782822,
-                longitude: 21.492790,
-            },
+            destinationCoordinates: null
         };
 
         this.mapView = null;
@@ -48,8 +45,10 @@ export default class ListExample extends Component {
         this.setState({ region });
     };
 
-    _showRoutePreview = (result) => {
-        this.mapView.fitToCoordinates(result.coordinates, {
+    _onDirectionsReady = (directions) => {
+        const destinationCoordinates = directions.coordinates[directions.coordinates.length - 1];
+
+        this.mapView.fitToCoordinates(directions.coordinates, {
             edgePadding: {
                 right: (width / 20),
                 bottom: (height / 20),
@@ -57,6 +56,8 @@ export default class ListExample extends Component {
                 top: (height / 20),
             }
         });
+
+        this.setState({ destinationCoordinates })
     };
 
     _onError = (errorMessage) => {
@@ -71,12 +72,12 @@ export default class ListExample extends Component {
     }
 
     render() {
-        const { region, destination, address } = this.state;
+        const { region, destinationCoordinates, destinationAddress } = this.state;
         return (
             <Container style={styles.container}>
                 <Header>
                     <Body>
-                    <Title>Darbas {address}</Title>
+                    <Title>Darbas {destinationAddress}</Title>
                     </Body>
                     <Right>
                         <Button
@@ -96,20 +97,20 @@ export default class ListExample extends Component {
                         showsUserLocation={true}
                         followsUserLocation={true}
                     >
-                    {destination &&
-                        <MapView.Marker coordinate={destination} />
+                    {destinationCoordinates &&
+                        <MapView.Marker coordinate={destinationCoordinates} />
                     }
-                    { destination && region && (
+                    { region && destinationAddress &&
                         <MapViewDirections
                             origin={region}
-                            destination={destination}
+                            destination={destinationAddress}
                             apikey={GOOGLE_DIRECTIONS_API_KEY}
                             strokeWidth={5}
                             strokeColor="blue"
-                            onReady={this._showRoutePreview}
+                            onReady={this._onDirectionsReady}
                             onError={this._onError}
                         />
-                    )}
+                    }
                 </MapView>}
     </Container>
         );
