@@ -58,8 +58,15 @@ export default class ListExample extends Component {
         navigation.push('Map', { address })
     };
 
-    render() {
+    _logout() {
         const { navigation } = this.props;
+        // clear storage data and redirect to login screen
+        AsyncStorage.removeItem('data').then(() => {
+            navigation.push('Login')
+        });
+    }
+
+    render() {
         const { username, sales } = this.state;
         return (
             <Container>
@@ -70,7 +77,7 @@ export default class ListExample extends Component {
                     <Right>
                         <Button
                             style={styles.driveElseBtn}
-                            onPress={() => navigation.push('Login')}
+                            onPress={() => this._logout()}
                             danger
                         >
                             <Text>Atsijungti</Text>
