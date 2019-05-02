@@ -9,7 +9,7 @@ export default class LoginScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            code: '',
+            code: '1111', // TODO: remove in production
         };
     }
 
@@ -21,7 +21,7 @@ export default class LoginScreen extends React.Component {
         const { code } = this.state;
         const { navigation } = this.props;
 
-        fetch(`${Globals.SERVER_URL}/api/app/get-my-sales?app_code=1111`, { // TODO: replace number with the state code
+        fetch(`${Globals.SERVER_URL}/api/app/get-my-sales?app_code=${code}`, {
                 method: 'GET',
             })
             .then((response) => response.json())
