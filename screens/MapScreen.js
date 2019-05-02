@@ -16,9 +16,8 @@ export default class ListExample extends Component {
     constructor(props) {
         super(props);
 
-
         this.state = {
-            destinationAddress: props.navigation.getParam('c', ''),
+            destinationAddress: props.navigation.getParam('address', '-'),
             region: null,
             destinationCoordinates: null
         };

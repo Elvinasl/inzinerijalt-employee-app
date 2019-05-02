@@ -36,10 +36,6 @@ export default class App extends React.Component {
 
   render() {
     const { isFontsLoaded } = this.state;
-    return (
-        <React.Fragment>
-          { isFontsLoaded ? (<AppContainer/>) : null }
-        </React.Fragment>
-    )
+    return ( isFontsLoaded && <AppContainer/>)
   }
 }
