@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Container, Header, Content, List, Title, Body, Right, Text, Button, Toast} from 'native-base';
+import {Container, Content, List, Title, Body, Right, Text, Button, Toast} from 'native-base';
 import { StyleSheet } from "react-native";
 import { AsyncStorage } from 'react-native';
 import { Constants } from "expo";
 import AddressListItem from "../components/AddressListItem";
+import RegularHeader from "../components/RegularHeader";
 
 export default class ListExample extends Component {
 
@@ -65,19 +66,11 @@ export default class ListExample extends Component {
         const { username, salesNoAddress, salesWithAddresses } = this.state;
         return (
             <Container>
-                <Header>
-                    <Body>
-                        <Title>{username} darbai</Title>
-                    </Body>
-                    <Right>
-                        <Button
-                            onPress={() => this._logout()}
-                            danger
-                        >
-                            <Text>Atsijungti</Text>
-                        </Button>
-                    </Right>
-                </Header>
+                <RegularHeader
+                    title={`${username} darbai`}
+                    rightBtnText={'Atsijungti'}
+                    onRightPress={this._logout}
+                />
                 <Content>
                     <Button
                         onPress={() => this._handleDriveElseClick()}

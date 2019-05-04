@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Header, Title, Body, Right, Text, Button, Badge } from 'native-base';
+import { Container, Title, Body, Right, Text, Button } from 'native-base';
 import { Dimensions, StyleSheet, Alert } from 'react-native';
 import { MapView, Location, Permissions, Constants } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
 import Globals from '../Globals';
 import DestinationButtons from "../components/Map/DestinationButtons";
+import RegularHeader from "../components/RegularHeader";
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -77,19 +78,11 @@ export default class ListExample extends Component {
         const { region, destinationCoordinates, destinationAddress, duration, distance } = this.state;
         return (
             <Container style={styles.container}>
-                <Header>
-                    <Body>
-                    <Title>Darbas {destinationAddress}</Title>
-                    </Body>
-                    <Right>
-                        <Button
-                            onPress={() => this._finishTask()}
-                            danger
-                        >
-                            <Text>Baigti darbą</Text>
-                        </Button>
-                    </Right>
-                </Header>
+                <RegularHeader
+                    title={`Darbas ${destinationAddress}`}
+                    rightBtnText={'Baigti darbą'}
+                    onRightPress={this._finishTask}
+                />
                 { duration && distance &&
                     <DestinationButtons duration={duration} distance={distance} />
                 }
