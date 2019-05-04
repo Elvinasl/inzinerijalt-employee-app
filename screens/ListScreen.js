@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Container, Header, Content, List, ListItem, Title, Body, Left, Right, Text, Button, Toast} from 'native-base';
-import { StyleSheet, View, Alert } from "react-native";
+import {Container, Header, Content, List, Title, Body, Right, Text, Button, Toast} from 'native-base';
+import { StyleSheet } from "react-native";
 import { AsyncStorage } from 'react-native';
 import { Constants } from "expo";
 import AddressListItem from "../components/AddressListItem";
@@ -71,7 +71,6 @@ export default class ListExample extends Component {
                     </Body>
                     <Right>
                         <Button
-                            style={styles.driveElseBtn}
                             onPress={() => this._logout()}
                             danger
                         >
@@ -82,8 +81,10 @@ export default class ListExample extends Component {
                 <Content>
                     <Button
                         onPress={() => this._handleDriveElseClick()}
+                        style={styles.DriveElseBtn}
                         block
-                        info
+                        success
+                        large
                     >
                         <Text>Vykti kitur</Text>
                     </Button>
@@ -116,4 +117,7 @@ const styles = StyleSheet.create({
     MainContainer: {
         paddingTop: Constants.statusBarHeight,
     },
+    DriveElseBtn: {
+        margin: 15
+    }
 });
