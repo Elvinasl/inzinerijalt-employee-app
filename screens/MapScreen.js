@@ -13,12 +13,25 @@ export default class ListExample extends Component {
         this.state = {
             destinationAddress: 'Guobu aklg. 3',//props.navigation.getParam('address', '-'),
         };
+
+        this.startTime = new Date().getTime();
     }
 
-    _finishTask() {
-        console.log('finished');
+    _finishTask = () => {
+        this._sendDrivenData();
         const { navigation } = this.props;
         navigation.push('List')
+    };
+
+    _sendDrivenData() {
+        const endTime = new Date().getTime();
+
+        const data = {
+          startTime: this.startTime,
+          endTime: endTime,
+        };
+
+        // TODO: add more data
     }
 
     render() {

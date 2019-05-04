@@ -11,7 +11,7 @@ const MainNavigator = createStackNavigator({
   List: {screen: ListScreen},
   Map: {screen: MapScreen},
 }, {
-  initialRouteName: 'Map',
+  initialRouteName: 'Login',
   headerMode: 'none',
 });
 

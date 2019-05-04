@@ -13,7 +13,7 @@ export default class RegularHeader extends React.Component {
                 </Body>
                 <Right>
                     <Button
-                        onPress={() => onRightPress}
+                        onPress={onRightPress}
                         danger
                     >
                         <Text>{rightBtnText}</Text>

@@ -54,13 +54,13 @@ export default class ListExample extends Component {
         navigation.push('Map', { address })
     };
 
-    _logout() {
+    _logout = () => {
         const { navigation } = this.props;
         // clear storage data and redirect to login screen
         AsyncStorage.removeItem('data').then(() => {
             navigation.push('Login')
         });
-    }
+    };
 
     render() {
         const { username, salesNoAddress, salesWithAddresses } = this.state;
