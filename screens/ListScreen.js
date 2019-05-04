@@ -3,6 +3,7 @@ import {Container, Header, Content, List, ListItem, Title, Body, Left, Right, Te
 import { StyleSheet, View, Alert } from "react-native";
 import { AsyncStorage } from 'react-native';
 import { Constants } from "expo";
+import AddressListItem from "../components/AddressListItem";
 
 export default class ListExample extends Component {
 
@@ -10,8 +11,8 @@ export default class ListExample extends Component {
         super(props);
         this.state = {
             username: '',
-            salesNoAddress: [],
             salesWithAddresses: [],
+            salesNoAddress: [],
         };
     }
 
@@ -47,15 +48,6 @@ export default class ListExample extends Component {
         console.log('drive else click');
     }
 
-    _verifyDriveToAddress(address, callback) {
-        Alert.alert(
-            'Ar tikai norite vykti adresu:', `${address}?`, [
-                {text: 'Atšaukti', onPress: () => {}, style: 'cancel'},
-                {text: 'Taip', onPress: () => callback(address)},
-            ],
-        );
-    }
-
     _handleDriveToAddress = (address) => {
         const { navigation } = this.props;
         navigation.push('Map', { address })
@@ -71,9 +63,8 @@ export default class ListExample extends Component {
 
     render() {
         const { username, salesNoAddress, salesWithAddresses } = this.state;
-        console.log(salesNoAddress)
         return (
-            <Container style={styles.MainContainer}>
+            <Container>
                 <Header>
                     <Body>
                         <Title>{username} darbai</Title>
@@ -88,60 +79,32 @@ export default class ListExample extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Content style={styles.driveElseBtn}>
+                <Content>
                     <Button
                         onPress={() => this._handleDriveElseClick()}
                         block
                         info
-                        large
                     >
                         <Text>Vykti kitur</Text>
                     </Button>
-                </Content>
-                <Content>
                     <List>
-                        <ListItem itemDivider>
-                            <Text>Pardavimai su tiksliu adresu</Text>
-                        </ListItem>
-                        {salesWithAddresses.length ? (
-                            salesWithAddresses.map(sale => (
-                                <ListItem key={sale.id}>
-                                    <Left>
-                                        <Text>{sale.name}</Text>
-                                    </Left>
-                                    <Right style={styles.container}>
-                                        <Button
-                                            onPress={() => this._verifyDriveToAddress(sale.address, this._handleDriveToAddress)}
-                                            success
-                                            large
-                                        >
-                                            <Text>Vykti</Text>
-                                        </Button>
-                                    </Right>
-                                </ListItem>
-                            ))) : null
-                        }
-                        <ListItem itemDivider>
-                            <Text>Pardavimai be tikslaus adreso</Text>
-                        </ListItem>
-                        {salesNoAddress.length ? (
-                            salesNoAddress.map(sale => (
-                                <ListItem key={sale.id}>
-                                    <Left>
-                                        <Text>{sale.name}</Text>
-                                    </Left>
-                                    <Right style={styles.container}>
-                                        <Button
-                                            onPress={() => this._verifyDriveToAddress(sale.name, this._handleDriveToAddress)}
-                                            success
-                                            large
-                                        >
-                                            <Text>Vykti</Text>
-                                        </Button>
-                                    </Right>
-                                </ListItem>
-                            ))) : null
-                        }
+                        { salesWithAddresses && (
+                            <AddressListItem
+                                title={'Pardavimai su tiksliu adresu'}
+                                sales={salesWithAddresses}
+                                addressValue={'address'}
+                                callback={this._handleDriveToAddress}
+                            />
+                        )}
+
+                        { salesNoAddress && (
+                            <AddressListItem
+                                title={'Pardavimai be tikslaus adreso'}
+                                sales={salesNoAddress}
+                                addressValue={'name'}
+                                callback={this._handleDriveToAddress}
+                            />
+                        )}
                     </List>
                 </Content>
             </Container>
@@ -153,13 +116,4 @@ const styles = StyleSheet.create({
     MainContainer: {
         paddingTop: Constants.statusBarHeight,
     },
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'space-between',
-    },
-    driveElseBtn: {
-        marginTop: 20,
-        marginBottom: 20
-    }
 });
