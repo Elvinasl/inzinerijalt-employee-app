@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet, Alert } from 'react-native';
 import { MapView, Location, Permissions, Constants } from 'expo';
 import MapViewDirections from 'react-native-maps-directions';
 import Globals from '../Globals';
+import DestinationButtons from "../components/Map/DestinationButtons";
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -17,7 +18,7 @@ export default class ListExample extends Component {
         super(props);
 
         this.state = {
-            destinationAddress: props.navigation.getParam('address', '-'),
+            destinationAddress: 'Guobu aklg. 3',//props.navigation.getParam('address', '-'),
             region: null,
             destinationCoordinates: null,
             distance: null,
@@ -89,18 +90,9 @@ export default class ListExample extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Container style={styles.mapHeader}>
-                    { duration &&
-                        <Badge info>
-                            <Text>Laikas iki darbo: { duration.toFixed(0) } min</Text>
-                        </Badge>
-                    }
-                    { distance &&
-                        <Badge info>
-                            <Text>Atstumas iki darbo: { distance.toFixed(0) } km</Text>
-                        </Badge>
-                    }
-                </Container>
+                { duration && distance &&
+                    <DestinationButtons duration={duration} distance={distance} />
+                }
                 { region
                 && <MapView
                         initialRegion={region}
@@ -141,13 +133,4 @@ const styles = StyleSheet.create({
         flex: 99,
         zIndex: 0,
     },
-    mapHeader: {
-        zIndex: 1,
-        position: 'absolute',
-        backgroundColor: 'transparent',
-        top: 100,
-        left: 10,
-        flexDirection: 'row',
-    },
-
 });
