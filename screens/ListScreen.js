@@ -10,7 +10,8 @@ export default class ListExample extends Component {
         super(props);
         this.state = {
             username: '',
-            sales: [],
+            salesNoAddress: [],
+            salesWithAddresses: [],
         };
     }
 
@@ -23,10 +24,11 @@ export default class ListExample extends Component {
             .then((responseJson) => {
                 if (responseJson !== null) {
                     // taking date from the local storage and assigning it to the state
-                    const { username, sales } = JSON.parse(responseJson);
+                    const { username, salesNoAddress, salesWithAddresses } = JSON.parse(responseJson);
                     this.setState({
                         username,
-                        sales,
+                        salesNoAddress,
+                        salesWithAddresses,
                     });
                 }
             }).catch(() => {
@@ -68,7 +70,8 @@ export default class ListExample extends Component {
     }
 
     render() {
-        const { username, sales } = this.state;
+        const { username, salesNoAddress, salesWithAddresses } = this.state;
+        console.log(salesNoAddress)
         return (
             <Container style={styles.MainContainer}>
                 <Header>
@@ -85,7 +88,7 @@ export default class ListExample extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <View style={styles.driveElseBtn}>
+                <Content style={styles.driveElseBtn}>
                     <Button
                         onPress={() => this._handleDriveElseClick()}
                         block
@@ -94,11 +97,35 @@ export default class ListExample extends Component {
                     >
                         <Text>Vykti kitur</Text>
                     </Button>
-                </View>
+                </Content>
                 <Content>
                     <List>
-                        {sales.length ? (
-                            sales.map(sale => (
+                        <ListItem itemDivider>
+                            <Text>Pardavimai su tiksliu adresu</Text>
+                        </ListItem>
+                        {salesWithAddresses.length ? (
+                            salesWithAddresses.map(sale => (
+                                <ListItem key={sale.id}>
+                                    <Left>
+                                        <Text>{sale.name}</Text>
+                                    </Left>
+                                    <Right style={styles.container}>
+                                        <Button
+                                            onPress={() => this._verifyDriveToAddress(sale.address, this._handleDriveToAddress)}
+                                            success
+                                            large
+                                        >
+                                            <Text>Vykti</Text>
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                            ))) : null
+                        }
+                        <ListItem itemDivider>
+                            <Text>Pardavimai be tikslaus adreso</Text>
+                        </ListItem>
+                        {salesNoAddress.length ? (
+                            salesNoAddress.map(sale => (
                                 <ListItem key={sale.id}>
                                     <Left>
                                         <Text>{sale.name}</Text>
