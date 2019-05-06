@@ -49,15 +49,6 @@ export default class MapDirections extends React.Component {
     _onDirectionsReady = (directions) => {
         const { distance, duration, coordinates } = directions;
         const destinationCoordinates = coordinates[coordinates.length - 1];
-
-        this.mapView.fitToCoordinates(coordinates, {
-            edgePadding: {
-                right: (width / 20),
-                bottom: (height / 20),
-                left: (width / 20),
-                top: (height / 20),
-            }
-        });
         this.setState({ destinationCoordinates, distance, duration })
     };
 
