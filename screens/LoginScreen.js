@@ -4,13 +4,14 @@ import {
 } from 'native-base';
 import { StyleSheet, Image, AsyncStorage } from 'react-native';
 
+import { Constants } from 'expo';
 import Globals from '../Globals';
 
 export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '1111', // TODO: remove in production
+      code: '',
     };
   }
 
@@ -35,7 +36,7 @@ export default class LoginScreen extends React.Component {
         Toast.show({
           text: 'Netinkamas kodas!',
           buttonText: 'Supratau',
-          position: 'bottom',
+          position: 'top',
           type: 'danger',
           duration: 3000,
         });
@@ -45,7 +46,7 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <Root>
-        <Container>
+        <Container style={styles.wrapper}>
           <Header />
           <Container style={styles.logoContainer}>
             <Image source={require('../assets/inzinerijalt_png_logo.png')} />
@@ -75,6 +76,9 @@ export default class LoginScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    paddingTop: Constants.statusBarHeight,
+  },
   logoContainer: {
     display: 'flex',
     alignItems: 'center',
