@@ -5,7 +5,6 @@ import {Location, MapView, Permissions} from "expo";
 import MapViewDirections from "react-native-maps-directions";
 import Globals from "../../Globals";
 import DestinationButtons from "./DestinationButtons";
-import {Fab, Icon} from "native-base";
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -66,10 +65,6 @@ export default class MapDirections extends React.Component {
         Alert.alert('Klaida', errorMessage);
     };
 
-    _onDrive() {
-        console.log('drive');
-    }
-
     render() {
         const { region, destinationCoordinates, destinationAddress, duration, distance } = this.state;
         return (
@@ -77,12 +72,6 @@ export default class MapDirections extends React.Component {
             { duration && distance &&
                 <DestinationButtons duration={duration} distance={distance} />
             }
-            <Fab
-                style={styles.driveBtn}
-                position="bottomRight"
-                onPress={() => this._onDrive()}>
-                <Icon name="navigate" />
-            </Fab>
             { region &&
                 <MapView
                     initialRegion={region}
@@ -118,10 +107,6 @@ const styles = StyleSheet.create({
         flex: 99,
         zIndex: 0,
     },
-    driveBtn: {
-        backgroundColor: '#5067FF',
-        zIndex: 1,
-    }
 });
 
 MapDirections.propTypes = {
