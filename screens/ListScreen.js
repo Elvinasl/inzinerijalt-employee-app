@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container, Content, List, Title, Body, Right, Text, Button, Toast} from 'native-base';
+import {Container, Content, List, Text, Button, Toast, Spinner} from 'native-base';
 import { StyleSheet } from "react-native";
 import { AsyncStorage } from 'react-native';
 import { Constants } from "expo";
@@ -14,6 +14,7 @@ export default class ListExample extends Component {
             username: '',
             salesWithAddresses: [],
             salesNoAddress: [],
+            isLoading: true,
         };
     }
 
@@ -31,6 +32,7 @@ export default class ListExample extends Component {
                         username,
                         salesNoAddress,
                         salesWithAddresses,
+                        isLoading: false,
                     });
                 }
             }).catch(() => {
@@ -63,7 +65,7 @@ export default class ListExample extends Component {
     };
 
     render() {
-        const { username, salesNoAddress, salesWithAddresses } = this.state;
+        const { username, salesNoAddress, salesWithAddresses, isLoading } = this.state;
         return (
             <Container>
                 <RegularHeader
@@ -81,25 +83,26 @@ export default class ListExample extends Component {
                     >
                         <Text>Vykti kitur</Text>
                     </Button>
-                    <List>
-                        { salesWithAddresses && (
-                            <AddressListItem
-                                title={'Pardavimai su tiksliu adresu'}
-                                sales={salesWithAddresses}
-                                addressValue={'address'}
-                                callback={this._handleDriveToAddress}
-                            />
-                        )}
+                    { isLoading ? <Spinner color='red' /> :
+                      (<List>
+                            { salesWithAddresses && (
+                                <AddressListItem
+                                    title={'Pardavimai su tiksliu adresu'}
+                                    sales={salesWithAddresses}
+                                    addressValue={'address'}
+                                    callback={this._handleDriveToAddress}
+                                />
+                            )}
 
-                        { salesNoAddress && (
-                            <AddressListItem
-                                title={'Pardavimai be tikslaus adreso'}
-                                sales={salesNoAddress}
-                                addressValue={'name'}
-                                callback={this._handleDriveToAddress}
-                            />
-                        )}
-                    </List>
+                            { salesNoAddress && (
+                                <AddressListItem
+                                    title={'Pardavimai be tikslaus adreso'}
+                                    sales={salesNoAddress}
+                                    addressValue={'name'}
+                                    callback={this._handleDriveToAddress}
+                                />
+                            )}
+                        </List>)}
                 </Content>
             </Container>
         );

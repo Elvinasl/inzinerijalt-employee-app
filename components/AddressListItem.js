@@ -7,9 +7,7 @@ import PropTypes from 'prop-types';
 
 export default class AddressListItem extends React.Component {
   render() {
-    const {
-      title, BtnText, sales, addressValue, callback,
-    } = this.props;
+    const { title, BtnText, sales, addressValue, callback } = this.props;
     return (
       <React.Fragment>
         <ListItem itemDivider>
