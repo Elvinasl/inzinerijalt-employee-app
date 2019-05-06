@@ -11,7 +11,7 @@ export default class ListExample extends Component {
         super(props);
 
         this.state = {
-            destinationAddress: 'Guobu aklg. 3',//props.navigation.getParam('address', '-'),
+            destinationAddress: props.navigation.getParam('address', '-'),
         };
 
         this.startTime = new Date().getTime();
