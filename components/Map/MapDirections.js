@@ -17,7 +17,7 @@ export default class MapDirections extends React.Component {
         super(props);
 
         this.state = {
-            destinationAddress: props.destination,
+            destination: props.destination,
             region: null,
             destinationCoordinates: null,
             distance: null,
@@ -57,7 +57,7 @@ export default class MapDirections extends React.Component {
     };
 
     render() {
-        const { region, destinationCoordinates, destinationAddress, duration, distance } = this.state;
+        const { region, destinationCoordinates, destination, duration, distance } = this.state;
         return (
             <React.Fragment>
             { duration && distance &&
@@ -75,10 +75,10 @@ export default class MapDirections extends React.Component {
                     {destinationCoordinates &&
                     <MapView.Marker coordinate={destinationCoordinates} />
                     }
-                    { region && destinationAddress &&
+                    { region && destination &&
                     <MapViewDirections
                         origin={region}
-                        destination={destinationAddress}
+                        destination={destination}
                         apikey={GOOGLE_DIRECTIONS_API_KEY}
                         strokeWidth={5}
                         strokeColor="blue"
@@ -101,7 +101,13 @@ const styles = StyleSheet.create({
 });
 
 MapDirections.propTypes = {
-    destination: PropTypes.string.isRequired,
+    destination: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+            latitude: PropTypes.number.isRequired,
+            longitude: PropTypes.number.isRequired,
+        }),
+    ]),
     isVisible: PropTypes.bool,
 };
 

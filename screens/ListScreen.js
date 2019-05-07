@@ -89,7 +89,6 @@ export default class ListExample extends Component {
                                 <AddressListItem
                                     title={'Pardavimai su tiksliu adresu'}
                                     sales={salesWithAddresses}
-                                    addressValue={'address'}
                                     callback={this._handleDriveToAddress}
                                 />
                             )}
@@ -98,7 +97,6 @@ export default class ListExample extends Component {
                                 <AddressListItem
                                     title={'Pardavimai be tikslaus adreso'}
                                     sales={salesNoAddress}
-                                    addressValue={'name'}
                                     callback={this._handleDriveToAddress}
                                 />
                             )}

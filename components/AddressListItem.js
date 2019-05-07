@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 export default class AddressListItem extends React.Component {
   render() {
-    const { title, BtnText, sales, addressValue, callback } = this.props;
+    const { title, BtnText, sales, callback } = this.props;
     return (
       <React.Fragment>
         <ListItem itemDivider>
@@ -20,7 +20,7 @@ export default class AddressListItem extends React.Component {
             </Left>
             <Right style={styles.container}>
               <Button
-                onPress={() => callback(sale[addressValue])}
+                onPress={() => callback(sale)}
                 success
                 large
               >
@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 AddressListItem.propTypes = {
   title: PropTypes.string.isRequired,
   callback: PropTypes.func.isRequired,
-  addressValue: PropTypes.string.isRequired,
   sales: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -58,7 +57,7 @@ AddressListItem.propTypes = {
       latitude: PropTypes.number.isRequired,
       longitude: PropTypes.number.isRequired,
     }),
-  ])),
+  ])).isRequired,
   BtnText: PropTypes.string,
 };
 

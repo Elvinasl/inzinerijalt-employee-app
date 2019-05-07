@@ -10,8 +10,21 @@ export default class ListExample extends Component {
     constructor(props) {
         super(props);
 
+        const address = props.navigation.getParam('address', '-');
+
+        let destination = null;
+        if (address.latitude && address.longitude) {
+            destination = {
+                latitude: parseFloat(address.latitude),
+                longitude: parseFloat(address.longitude),
+            }
+        } else {
+            destination = address.name;
+        }
+
         this.state = {
-            destinationAddress: props.navigation.getParam('address', '-'),
+            destinationAddress: destination,
+            destinationName: address.name
         };
 
         this.startTime = new Date().getTime();
@@ -35,17 +48,19 @@ export default class ListExample extends Component {
     }
 
     render() {
-        const { destinationAddress } = this.state;
+        const { destinationAddress, destinationName } = this.state;
         return (
             <Container style={styles.container}>
                 <RegularHeader
-                    title={`Darbas ${destinationAddress}`}
+                    title={destinationName}
                     rightBtnText={'Baigti darbą'}
                     onRightPress={this._finishTask}
                 />
-                <MapDirections
-                    destination={destinationAddress}
-                />
+                { destinationAddress &&
+                    <MapDirections
+                      destination={destinationAddress}
+                    />
+                }
             </Container>
         );
     }
